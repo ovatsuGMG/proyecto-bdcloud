@@ -1,21 +1,18 @@
 package pe.edu.cibertec.proyecto_bdcloud.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
+@Table(name="proveedor")
 @Data
-public class Cliente {
+public class Proveedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String dni;
+    private String ruc;
     private String nombre;
-    private String apellido;
-    private String telefono;
+    private String contacto;
     private String distrito;
 
     public Integer getId() {
@@ -26,12 +23,12 @@ public class Cliente {
         this.id = id;
     }
 
-    public String getDni() {
-        return dni;
+    public String getRuc() {
+        return ruc;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
     }
 
     public String getNombre() {
@@ -42,20 +39,12 @@ public class Cliente {
         this.nombre = nombre;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getContacto() {
+        return contacto;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setContacto(String contacto) {
+        this.contacto = contacto;
     }
 
     public String getDistrito() {
