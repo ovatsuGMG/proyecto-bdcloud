@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Ventas - Gaming Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; padding-top: 50px; }
+        .table-container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        .header-title { color: #0d6efd; margin-bottom: 30px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="table-container">
+        <h2 class="text-center header-title">Relación de Ventas Realizadas</h2>
+
+        <table class="table table-hover">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Videojuego</th>
+                <th>Sede / Tienda</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody id="contenido-ventas">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Reemplaza esta URL con la de tu aplicación en SAP BTP/Azure
+    const API_URL = 'https://appback-proyecto-fbeubjfjhwcjbc hp.canadacentral-01.azurewebsites.net/api/ventas';
+
+    async function cargarVentas() {
+        try {
+            const respuesta = await fetch(API_URL);
+            const ventas = await respuesta.json();
+            const tabla = document.getElementById('contenido-ventas');
+
+            ventas.forEach(v => {
+                const fila = `
+                    <tr>
+                        <td>${v.id}</td>
+                        <td>${new Date(v.fechaVenta).toLocaleString()}</td>
+                        <td>${v.cliente.nombre} ${v.cliente.apellido}</td>
+                        <td>${v.videojuego.nombre}</td>
+                        <td>${v.tienda.nombreSede}</td>
+                        <td>${v.cantidad}</td>
+                        <td><strong>S/ ${v.total.toFixed(2)}</strong></td>
+                    </tr>
+                `;
+                tabla.innerHTML += fila;
+            });
+        } catch (error) {
+            console.error("Error cargando datos:", error);
+            document.getElementById('contenido-ventas').innerHTML =
+                '<tr><td colspan="7" class="text-center text-danger">Error al conectar con la API</td></tr>';
+        }
+    }
+
+    cargarVentas();
+</script>
+
+</body>
+</html>
